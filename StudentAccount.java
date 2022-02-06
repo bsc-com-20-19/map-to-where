@@ -7,7 +7,6 @@ public class StudentAccount{
     private double subsistenceLoan;
     private double subsistenceLoanInterest;
     private String accountNumber;
-
     private int programDuration;
 
     public StudentAccount(String name, String program, int currentYear, 

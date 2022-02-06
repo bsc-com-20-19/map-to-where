@@ -1,8 +1,8 @@
-jimport java.util.*;
-public class LoanManagementAppliacation {
+import java.util.*;
+public class LoanManagementSystem {
      public static void main(String [] ars){
 
-    public static ArrayList<PostGraduateStudent> postAccounts = new ArrayList<>();
+    public static ArrayList<PostGraduateAcc> postAccounts = new ArrayList<>();
     public static ArrayList<UnderGraduateStudent> underAccounts = new ArrayList<>();
     static Scanner input  = new Scanner(System.in);
     
@@ -44,7 +44,7 @@ public class LoanManagementAppliacation {
     }
 
     public static void listAllBanks() {
-        if(LoanManagementAppliacation.postAccounts.isEmpty()){
+        if(LoanManagementSystem.postAccounts.isEmpty()){
             System.out.println("No accounts availble");
         }
     }
@@ -67,7 +67,7 @@ public class LoanManagementAppliacation {
                         System.out.println("The account number does not exists");
                     }
                     else{
-                        LoanManagementAppliacation.underAccounts.get(itExists).getAllLoans();
+                        LoanManagementSystem.underAccounts.get(itExists).getAllLoans();
                     }
                     break;
             
@@ -76,6 +76,7 @@ public class LoanManagementAppliacation {
             }
 
     }
+
 
     public static void applyLoan() {
     }

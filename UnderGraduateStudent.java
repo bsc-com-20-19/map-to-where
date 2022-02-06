@@ -1,4 +1,4 @@
-public class UnderGraduateStudent extends StudentLoanAccount{
+public class UnderGraduateStudent extends StudentAccount{
     private double stationaryLoan;
     private double stationaryLoanInterest;    
    
