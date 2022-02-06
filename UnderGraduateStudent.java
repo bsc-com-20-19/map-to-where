@@ -1,65 +1,32 @@
-import java.util.*;
-public class UnderGraduateStudent extends LoanAccount{
-    private double stationaryLoan ;
-    private double stationaryInterest;
-    private final double stationaryInterestRate = 0.15;
-    
-    UnderGraduateStudent(String name, String program, int currentYr){
-        super(name, program, currentYr, 4, 0.11); // duration is 4 and subsistence rate is 11% for underGraduate 
-        this.generateAccountNumber();
+public class UnderGraduateStudent extends StudentLoanAccount{
+    private double stationaryLoan;
+    private double stationaryLoanInterest;    
+   
+    public UnderGraduateStudent(String name, String program, int currentYear, String accountNumber){
+
+        super(name, program, currentYear, 4, accountNumber);
     }
 
-    
-    @Override
-    protected void generateAccountNumber(){
-        Random random = new Random(3);
-        String underGradAccountNumber;
-
-        if((LoanAccount.accounts).size() == 0){
-            underGradAccountNumber = "UG" + random.nextInt(1000);
-            setAccountNumber(underGradAccountNumber);
-        }
-        //This else block checks a generated account number exists or not.. 
-        else{
-            boolean accountExists = true;
-            //iterates until the generated account number is unique
-            do{
-                underGradAccountNumber = "UG" + random.nextInt(1000);
-                for(int i =0; i< (LoanAccount.accounts).size() ; i++){
-                    //The ArrayList supports different types of Loan.. 
-                    //Only the under graduate accounts have to be checked
-                    if(LoanAccount.accounts.get(i) instanceof UnderGraduateStudent){
-                        if(LoanAccount.accounts.get(i).getAccountNumber().equals(underGradAccountNumber)){
-                            accountExists = true;
-                            break;  
-                        }
-                    }else   // the iteration account is an instance of another subclass
-                        continue;
-                    
-                }
-                super.setAccountNumber(underGradAccountNumber);
-                accountExists = false;
-
-
-            }while(accountExists);
-        }
-
+public void applyForStationaryAllowance(double amount){
+        double repayAmount = AnnualCompoundInterest(amount, 0.15);
+        this.stationaryLoan += repayAmount;
+        this.stationaryLoanInterest = repayAmount - amount;
     }
-
-    public void applyForStationaryLoan(double stationaryAmount){
-        this.stationaryLoan += stationaryAmount;
-        double payBackAmount = calculateCompoundtInterest(stationaryAmount, this.stationaryInterestRate);
-        this.stationaryInterest += payBackAmount - stationaryAmount; 
-        
-        System.out.println("....Stationary Loan granted....");
-        this.miniStatement += "\n" + (new Date()).toString() + ": Applied for tuition fee loan of MWK" + stationaryAmount +
-            " with a payback amount of MWK" + payBackAmount;
-    }
-    //method for repaying stationary Loan
-    public void payBackStationaryLoan(double amount){
+    public void repayStationaryAllowance(double amount){
         this.stationaryLoan -= amount;
-        this.miniStatement += "\n" + (new Date()).toString() + ": Paid back an amount of  " + amount + 
-                        "to your stationary  Loan";      
+    }
+    public void applyForSubsistenceLoan(double amount) {
+        super.applyForSubsistenceLoan(amount, .11);
     }
     
+    public double getStationaryAllowance(){
+        return this.stationaryLoan;
+    }
+
+    @Override
+    public String getAllLoans() {
+        return super.getAllLoans() + 
+        "Stationary \t\t " + this.stationaryLoan + " \t\t " + this.stationaryLoanInterest;
+
+    }
 }
