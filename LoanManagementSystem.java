@@ -1,13 +1,13 @@
 import java.util.*;
 public class LoanManagementSystem {
-     public static void main(String [] ars){
-
-    public static ArrayList<PostGraduateAcc> postAccounts = new ArrayList<>();
-    public static ArrayList<UnderGraduateStudent> underAccounts = new ArrayList<>();
+     public static void main(String [] args){
+// the array to hold all the loans for each type of  student loan account
+    public static ArrayList<PostGraduateAccount> postAccounts = new ArrayList<>();
+    public static ArrayList<UnderGraduateStudentAccount> underAccounts = new ArrayList<>();
     static Scanner input  = new Scanner(System.in);
     
     
-
+//the main menu for the whole program
         System.out.println("\t\t\t\tLOAN MANAGEMENT SYSTEM" +
         "\n              __________________________________________________");
         System.out.println(
@@ -38,18 +38,17 @@ public class LoanManagementSystem {
                 System.out.println("Invalid input try again");
                 main(null);
             }
-            
-            
-    
+
+     // to create  a method for creating a loan account for both types of students
+     public static void createAccount() {
+
+    }
+    // to create  a method for applying for a  loan for both types of students
+  public static void applyLoan() {
     }
 
-    public static void listAllBanks() {
-        if(LoanManagementSystem.postAccounts.isEmpty()){
-            System.out.println("No accounts availble");
-        }
-    }
-
-    public static void viewLoan() {
+//method to allow the user to view the loans he\she has 
+ public static void viewLoan() {
         System.out.println(
             "\tAccount type" +
             "\n---------------------" + 
@@ -74,21 +73,23 @@ public class LoanManagementSystem {
                 default:
                     break;
             }
-
     }
 
 
-    public static void applyLoan() {
+    public static void listAllBanks() {
+        if(LoanManagementSystem.postAccounts.isEmpty()){
+            System.out.println("No accounts availble");
+        }
     }
-
-    public static void createAccount() {
-    }
+   
     //returns zero when the count does not exists
     public static int findUnderGradAccount(String accountNuber){
         return -1;
     }
+    // the method for exiting the whole loan management system
     public static void exit(){
         System.out.println("Thanks for trusting the loan management system");
         System.exit(1);
     }
+  }
 }

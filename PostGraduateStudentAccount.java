@@ -1,4 +1,4 @@
-public class PostGraduateStudent extends StudentAccount{
+public class PostGraduateStudentAccount extends StudentAccount{
 
     private double researchGrant ;
 
