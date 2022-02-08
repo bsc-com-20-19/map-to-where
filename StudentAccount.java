@@ -9,7 +9,7 @@ class StudentAccount {
     
                     LoanMenu(Student); 
    }            
-
+//method for the the loan menu
    public static void LoanMenu(Loan Student){
       System.out.println("\n   LOAN MENU " + 
                        "\n-----------------");
@@ -31,20 +31,19 @@ switch (option) {
            break;
    case 4: System.out.println(Student.getName() +  "\n<<<<<<<<<<<Logging out>>>>>>>>>>>...");
            LoanManagementSystem.main(null);
-   default: System.out.println("::::iNVALID OPTION::::");
+   default: System.out.println("::::iNVALID CHOICE::::");
    
 }
 LoanMenu(Student);
    }
    public static void ApplyLoan(Loan Student) {
       System.out.println();
-      //determines weither the account is undergraduate(true) or postgraduate (false)
+      //determines whether the account is undergraduate(true) or postgraduate (false)
       boolean isUndergraduate = (Student instanceof Undergraduate);
-      System.out.println(":::SELECT LOAN TYPE::: " +
+      System.out.println(":::SELECT THE TYPE OF LOAN::: " +
                       "\n---------------------------------" +
                       "\n1. Tuition Loan" +
                       "\n2. Subsistence Loan" +
-                      //a conditional statement that print an option based on student either undergrad (stationary) or postgrad (research)
                       "\n3. " + (isUndergraduate ?   "Stationary" : "Research Grant") + 
                       "\n00. Loan Menu"); 
       System.out.print("Select Option:: ");
@@ -58,12 +57,12 @@ LoanMenu(Student);
                   Student.applyForSubsistenceLoan(input.nextDouble());
                   break;
           case 3: 
-              //option for undergraduate is stationary therefore...
+              
               if(isUndergraduate){
                   System.out.print("Enter stationary Loan Amount(MWK): ");
                   ((Undergraduate)Student).applyForStationaryAllowance(input.nextDouble());   
               }
-              //option for postgraduate is research grant
+            
               else{ 
                   System.out.print("Enter research grant amount(MWK): ");
                   ((Postgraduate)Student).ApplyForResearchGrant(input.nextDouble());
@@ -78,9 +77,9 @@ LoanMenu(Student);
 }
 public static void PayBackLoan(Loan Student) {
    System.out.println();
-   //Determines weither the account is undergraduate(true) or postgraduate (false)
+   //DeterminE whether the account is undergraduate(true) or postgraduate (false)
    boolean isUndergraduate = (Student instanceof Undergraduate);
-   System.out.println("LOAN REPAYMENT:: SELECT LOAN TYPE" +
+   System.out.println("LOAN REPAYMENT:: SELECT TYPE OF LOAN" +
                    "\n--------------------------------------" +
                    "\n1. Tuition" +
                    "\n2. Subsistence" +
@@ -97,12 +96,12 @@ public static void PayBackLoan(Loan Student) {
                Student.repaySubsistenceLoan(input.nextDouble());;
                break;
        case 3: 
-           //option for undergraduate to repay stationary loan
+        
            if(isUndergraduate){
                System.out.print("Enter stationary repayment amount(MWK): ");
                ((Undergraduate)Student).repayStationaryAllowance(input.nextDouble());;   
            }
-           //option 3 is invalid for postgraduate
+           
            else{ 
                System.out.println("!!!!invalid Selection try again...");
            }

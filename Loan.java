@@ -27,7 +27,7 @@ class Loan{
     private String generateAccountNumumber(String prepend){
         Random random = new Random(4);
         String AccountNum;
-        //generates an account number without checking the array
+    
         if((Loan.loanAccount).isEmpty()){
             AccountNum = prepend + random.nextInt(1000);
             return AccountNum;
@@ -44,9 +44,9 @@ class Loan{
                     
                     if(Loan.loanAccount.get(i).getAccountNumber().equals(AccountNum)){
                         AccountExists = true;
-                        break;  //breaks the for loop to generate another number in do while since the account exists
+                        break;  //breaks the for loop to generate another number since the account exists
                     }
-                    //Reaching the last index means the account number does not exists therefore use the account Number
+                    //by Reaching the last index means the account number does'nt exists 
                     if(i+1 == Loan.loanAccount.size()){
                         AccountExists = false;
                     }
@@ -100,51 +100,8 @@ class Loan{
         return this.TuitionLoan + this.SubsistenceLoan;
     }
 
-    public void applyForTuitionLoan(double amount){
-        /** 
-         the amount to be applied is specified in the  method parameters and using the Annual Compound interest the anount to be paid back
-         is calculated and passsed to the private field Tuition loan and the interest is calculated by subtracting 
-         the amount to be repaid minus the amount applied
-        */
-        double AmountToBePaid = AnnualCompoundInterest(amount, 0.10);
-        this.TuitionLoan += AmountToBePaid;
-        this.TuitionLoanInterest = AmountToBePaid - amount;
-        System.out.println("---Tuition Loan Applied successfully ----");
-    }
-    public void repayTuitionLoan(double amount){
-        if(this.TuitionLoan <= 0){
-            System.out.printf("You don't have any tuition loan right now...");
-        return;
-    }
-    double Extra = 0 ; //Amount left after paying the loan
-    //message when the amount paid fully repays the loan 
-    if(this.TuitionLoan - amount <= 0){
-        System.out.println("You've Successfully repaid your tuition loan in full ");
-        
-        //returns Money left when amount is greater than the specified loan
-        if(this.TuitionLoan - amount < 0) {
-                Extra = amount - this.TuitionLoan;
-            System.out.printf("The money left is : MWK%.2f returned \n", Extra );
-        }
-        //When User has no Tuition Loan
-        this.TuitionLoan = 0;
-        this.TuitionLoanInterest = 0; //sets interest to zero when the loan is fully repaid
-    }
-    //message when the amount paid does not fully repay the loan 
-    else{ 
-        System.out.printf("You've paid MWK%.2f to your tuition loan\n", amount);
-        this.TuitionLoan -= amount;
-}     
-    }
-    public double getTuitionLoan(){
-        return this.TuitionLoan;
-    }
+      // method for applying for susbstince loan
     public void applyForSubsistenceLoan(double amount){
-        /** 
-         the amount to be applied is specified in the  method parameters and using the Annual Compound interest the amount to be paid back
-         is calculated and passsed to the private field Subsistence loan and the interest is calculated by subtracting 
-         the amount to be repaid minus the amount applied
-        */
         double AmountToBePaid = AnnualCompoundInterest(amount, this.SubsistenceInterestRate);
         this.SubsistenceLoan += AmountToBePaid;
         this.SubsistenceLoanInterest = AmountToBePaid - amount;
@@ -176,7 +133,7 @@ if(this.SubsistenceLoan - amount <= 0){
     public double getSubsistenceLoan(){
         return this.TuitionLoan;
     }
-    //method to display all loans available and there interest
+    //method to show all available  loans and there interest
     public void getAllLoans(){
         System.out.println("Type of Loan \t\t Loan amount\t\t Interest added" + 
         "\n------------------------------------------------------------------------------");
@@ -189,3 +146,40 @@ System.out.printf("\nSubsistence  \t\t %12.2f \t\t %9.2f", this.SubsistenceLoan,
         return ACI;
     }
 }
+// method for applying for tuition loan
+    public void applyForTuitionLoan(double amount){
+        double AmountToBePaid = AnnualCompoundInterest(amount, 0.10);
+        this.TuitionLoan += AmountToBePaid;
+        this.TuitionLoanInterest = AmountToBePaid - amount;
+        System.out.println("---Tuition Loan Applied successfully ----");
+    }
+    //method for repaying tuition loan
+    public void repayTuitionLoan(double amount){
+        if(this.TuitionLoan <= 0){
+            System.out.printf("You don't have any tuition loan right now...");
+        return;
+    }
+    double Extra = 0 ; //Amount left after paying the  tuition loan
+    
+    if(this.TuitionLoan - amount <= 0){
+        System.out.println("You've Successfully repaid your tuition loan in full ");
+        
+        //this returns money left when amount is greater than the specified loan
+        if(this.TuitionLoan - amount < 0) {
+                Extra = amount - this.TuitionLoan;
+            System.out.printf("The money left is : MWK%.2f returned \n", Extra );
+        }
+        //When student has no Tuition Loan
+        this.TuitionLoan = 0;
+        this.TuitionLoanInterest = 0; //this sets interest to zero when the loan is fully repaid
+    }
+    // the message to be shown when the amount paid does not fully repay the loan 
+    else{ 
+        System.out.printf("You've paid MWK%.2f to your tuition loan\n", amount);
+        this.TuitionLoan -= amount;
+}     
+    }
+    public double getTuitionLoan(){
+        return this.TuitionLoan;
+    }
+  

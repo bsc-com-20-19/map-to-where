@@ -5,7 +5,7 @@
 
     public Undergraduate(String Name,String ProgramEnrolled, int CurrentYear){
         super(Name,ProgramEnrolled,CurrentYear,0.11,4,"UG");
-        //for undergrad subsistence loan interest is 11% ,duration is 4 Yrs and we prepend UG to the account number 
+        //for undergrade subsistence loan interest is 11% ,duration is 4 Yrs and we add UG to the account number 
     }
     public void applyForStationaryAllowance(double amount){
         double AmountToBePaid = AnnualCompoundInterest(amount, this.StationaryLoanInterestRate);
@@ -14,14 +14,14 @@
         System.out.println("---Stationary Loan Successfully granted---");
     }
     public void repayStationaryAllowance(double amount){
-        //returns amount paid if the user has no stationary loan
+
         if(this.StationaryLoan <= 0){
             System.out.printf("You don't have any stationary loan right now..." + 
                             "\nMWK%.2f returned \n", amount );
             return;
         }
-        double Extra = 0 ; //money left after repaying loan
-        //when the user fully repays the subsistence loan
+        double Extra = 0 ; //the money left after repaying loan
+        
         if(this.StationaryLoan - amount <= 0){
             System.out.println("You've Successfully repaid your stationary loan Allowance.");
             
@@ -32,7 +32,7 @@
             }
             //apparently user has no loan
             this.StationaryLoan = 0 ;
-            this.StationaryLoanInterest = 0 ; //sets interest to zero when the loan is fully repaid
+            this.StationaryLoanInterest = 0 ; // when the loan is fully repaid sets interest to zero
         }
         //when the amount paid does not fully repay the loan 
         else{ 
