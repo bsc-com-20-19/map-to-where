@@ -1,98 +1,120 @@
-public class StudentAccount{
-    private String name;
-    private String program;
-    private int currentYear;
-    private double tuitionLoan;
-    private double tuitionLoanInterest;
-    private double subsistenceLoan;
-    private double subsistenceLoanInterest;
-    private String accountNumber;
-    private int programDuration;
-
-    public StudentAccount(String name, String program, int currentYear, 
-            int programDuration, String accountNumber){
-                    this.name = name;
-                    this.program = program;
-                    this.currentYear = currentYear;
-                    this.programDuration = programDuration;
-                    this.accountNumber = accountNumber;
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
-    }
-
-    public int getCurrentYear() {
-        return currentYear;
-    }
-
-    public void setCurrentYear(int currentYear) {
-        this.currentYear = currentYear;
-    }
-
-    public int getProgramDuration() {
-        return programDuration;
-    }
-
-    public void setProgramDuration(int programDuration) {
-        this.programDuration = programDuration;
-    }
+import java.util.*;
+class StudentAccount {
+   public static Scanner input = new Scanner(System.in);
+   public static void AccountStudentAccount(Loan Student) {
+    System.out.println();
+    System.out.printf("  Welcome %s (%s, %s) to the loan menu" + 
+                    "\n_______________________________________________________________________",
+                    Student.getName(), Student.getAccountNumber(), Student.getProgramEnrolled());
     
-    
-    public void applyForTuitionLoan(double amount){
-        //
-        double repayAmount = AnnualCompoundInterest(amount, 0.1);
-        this.tuitionLoan += repayAmount; 
-        this.tuitionLoanInterest = repayAmount - amount;
+                    LoanMenu(Student); 
+   }            
 
-    }
-    public void repayTuitionLoan(double amount){
-        this.tuitionLoan -= tuitionLoan;
-    }
-    public double getTuitionLoan (){
-        return this.tuitionLoan;
-    }
+   public static void LoanMenu(Loan Student){
+      System.out.println("\n   LOAN MENU " + 
+                       "\n-----------------");
+System.out.println( 
+       "1. Apply For Loan " +
+       "\n2. Pay Back Loan " +
+       "\n3. Available Loans " +
+       "\n4. Logout");
+System.out.print("Enter your option:: ");
+int option = input.nextInt();
+switch (option) {
+   case 1: ApplyLoan(Student);
+       break;
 
-    public void applyForSubsistenceLoan(double amount, double rate){
-        double repayAmount = AnnualCompoundInterest(amount, rate);
-        this.subsistenceLoan += repayAmount;
-        this.subsistenceLoanInterest = repayAmount - amount;
-    }
-    public void repaySubsistenceLoan (double  amount){
-        this.subsistenceLoan -= amount;
-    }
-    public double getSubsistenceLoan(){
-        return this.subsistenceLoan;
-    }
-
-    public String getAllLoans(){
-        return "Type of Loan \t\t Loan amount \t\t Interest " +
-                "_____________________________________________"+
-                "\nTuition \t\t " +  this.tuitionLoan + " \t\t " +  this.tuitionLoanInterest +
-                "\nSubsistence \t\t " + this.subsistenceLoan + " \t\t " + this.subsistenceLoanInterest;
-    }
-
-
-    public double AnnualCompoundInterest(double amount, double rate) {
-        int time =  this.programDuration - this.currentYear;
-        double A = amount * ( Math.pow(1 + rate, time ));
-        return A;
-    }
-    
-
-
-
+   case 2: PayBackLoan(Student);
+       break;
+   case 3: Student.getAllLoans();
+           System.out.println();
+           break;
+   case 4: System.out.println(Student.getName() +  "\n<<<<<<<<<<<Logging out>>>>>>>>>>>...");
+           LoanManagementSystem.main(null);
+   default: System.out.println("::::iNVALID OPTION::::");
+   
 }
+LoanMenu(Student);
+   }
+   public static void ApplyLoan(Loan Student) {
+      System.out.println();
+      //determines weither the account is undergraduate(true) or postgraduate (false)
+      boolean isUndergraduate = (Student instanceof Undergraduate);
+      System.out.println(":::SELECT LOAN TYPE::: " +
+                      "\n---------------------------------" +
+                      "\n1. Tuition Loan" +
+                      "\n2. Subsistence Loan" +
+                      //a conditional statement that print an option based on student either undergrad (stationary) or postgrad (research)
+                      "\n3. " + (isUndergraduate ?   "Stationary" : "Research Grant") + 
+                      "\n00. Loan Menu"); 
+      System.out.print("Select Option:: ");
+      int key = input.nextInt();
+
+      switch (key) {
+          case 1: System.out.print("Enter Tuition Loan Amount(MWK): ");
+                  Student.applyForTuitionLoan(input.nextDouble());
+              break;
+          case 2: System.out.print("Enter Subsistence Loan Amount(MWK): ");
+                  Student.applyForSubsistenceLoan(input.nextDouble());
+                  break;
+          case 3: 
+              //option for undergraduate is stationary therefore...
+              if(isUndergraduate){
+                  System.out.print("Enter stationary Loan Amount(MWK): ");
+                  ((Undergraduate)Student).applyForStationaryAllowance(input.nextDouble());   
+              }
+              //option for postgraduate is research grant
+              else{ 
+                  System.out.print("Enter research grant amount(MWK): ");
+                  ((Postgraduate)Student).ApplyForResearchGrant(input.nextDouble());
+              }
+              break;
+          case 00: LoanMenu(Student);
+
+          default: System.out.println("!!!!Wrong option try again...");
+              break;
+      }
+      LoanMenu(Student);
+}
+public static void PayBackLoan(Loan Student) {
+   System.out.println();
+   //Determines weither the account is undergraduate(true) or postgraduate (false)
+   boolean isUndergraduate = (Student instanceof Undergraduate);
+   System.out.println("LOAN REPAYMENT:: SELECT LOAN TYPE" +
+                   "\n--------------------------------------" +
+                   "\n1. Tuition" +
+                   "\n2. Subsistence" +
+    (isUndergraduate ? "\n3. Stationary" : "") + 
+                   "\n00. Loan menu"); 
+   System.out.print("Select  option::: ");
+   int option = input.nextInt();
+
+   switch (option) {
+       case 1: System.out.print("Enter Tuition loan repayment amount(MWK): ");
+               Student.repayTuitionLoan(input.nextDouble());
+           break;
+       case 2: System.out.print("Enter subsistence amount(MWK): ");
+               Student.repaySubsistenceLoan(input.nextDouble());;
+               break;
+       case 3: 
+           //option for undergraduate to repay stationary loan
+           if(isUndergraduate){
+               System.out.print("Enter stationary repayment amount(MWK): ");
+               ((Undergraduate)Student).repayStationaryAllowance(input.nextDouble());;   
+           }
+           //option 3 is invalid for postgraduate
+           else{ 
+               System.out.println("!!!!invalid Selection try again...");
+           }
+           break;
+       case 00: LoanMenu(Student);
+
+       default: System.out.println("!!!!invalid Selection try again...");
+           break;
+   }
+   LoanMenu(Student);
+}
+
+ }
+ 
+
